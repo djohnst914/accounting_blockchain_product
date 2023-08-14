@@ -1,0 +1,42 @@
+from main import accounting_classes
+
+def get_accounting_class_subclasses():
+    """
+    Prompts the user to select an Accounting Class and Subclass from the predefined dictionary,
+    or add a new Accounting Class or Subclass.
+    Returns the selected Accounting Class and Subclass.
+    """
+    print("Select an Accounting Class:")
+    for i, accounting_class in enumerate(accounting_classes.keys()):
+        print(f"{i + 1}. {accounting_class}")
+    print("0. Add a new Accounting Class")
+    class_choice = input("Enter the number of the Accounting Class: ")
+    
+    if class_choice == "0":
+        new_class = input("Enter the name of the new Accounting Class: ")
+        accounting_classes[new_class] = []
+        subclass_choice = input("Enter the name of the Subclass for the new Accounting Class: ")
+        accounting_classes[new_class].append(subclass_choice)
+        return new_class, subclass_choice
+    elif class_choice.isdigit() and 1 <= int(class_choice) <= len(accounting_classes):
+        class_index = int(class_choice) - 1
+        selected_class = list(accounting_classes.keys())[class_index]
+        subclasses = accounting_classes[selected_class]
+        print(f"\nSelect a Subclass for {selected_class}:")
+        for i, subclass in enumerate(subclasses):
+            print(f"{i + 1}. {subclass}")
+        print("0. Add a new Subclass")
+        subclass_choice = input("Enter the number of the Subclass: ")
+        
+        if subclass_choice == "0":
+            new_subclass = input("Enter the name of the new Subclass: ")
+            accounting_classes[selected_class].append(new_subclass)
+            return selected_class, new_subclass
+        elif subclass_choice.isdigit() and 1 <= int(subclass_choice) <= len(subclasses):
+            subclass_index = int(subclass_choice) - 1
+            selected_subclass = subclasses[subclass_index]
+            return selected_class, selected_subclass
+    
+    # Invalid choice, recursively call the function again
+    print("Invalid choice. Please try again.")
+    return get_accounting_class_subclasses()
