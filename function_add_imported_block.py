@@ -1,6 +1,5 @@
-from classes.block import Block
 import logging
-
+from class_block import Block
 
 
 def add_imported_block(ledger, transactions, sender_name, import_filename):

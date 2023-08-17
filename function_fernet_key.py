@@ -1,6 +1,7 @@
 from cryptography.fernet import Fernet
 
 
+
 # This function generates a new Fernet key and saves it to a file named "secret.key" in binary mode. The generated key 
 # is written directly to the file using the write() method.
 def generate_key():
@@ -20,8 +21,8 @@ def load_key():
     return open("secret.key", "rb").read()
 
 # This function takes a message in the form of bytes and encrypts it using the Fernet encryption scheme. It loads the 
-# Fernet key using the load_key() function, initializes a Fernet object with the key, and then encrypts the input 
-# message bytes using the encrypt() method of the Fernet object. The encrypted message is returned.
+# Fernet key using the load_key() function, initializes a Fernet object with the key, and then encrypts the input message
+# bytes using the encrypt() method of the Fernet object. The encrypted message is returned.
 def encrypt_message(message_bytes):
     """
     Encrypts a message

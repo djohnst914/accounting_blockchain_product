@@ -1,8 +1,5 @@
 import pandas as pd
-from pandas import Timestamp
-import datetime
 import time
-from classes.transaction import Transaction
 
 
 def load_transactions_from_excel(filename):

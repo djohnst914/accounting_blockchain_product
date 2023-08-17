@@ -1,6 +1,5 @@
-from collections import defaultdict
 import pandas as pd
-from pandas import Timestamp
+from collections import defaultdict
 
 
 def generate_income_statement(ledger, fiscal_year=('1900-01-01', '9999-12-31')):
@@ -26,7 +25,7 @@ def generate_income_statement(ledger, fiscal_year=('1900-01-01', '9999-12-31')):
     income_statement['Net Income']['Net Income'] = income_statement['Revenue']['Total Revenue'] - income_statement['Expenses']['Total Expenses']
 
     df = pd.DataFrame.from_dict(income_statement, orient='columns')
-    
+
     # Generate the desired_order dynamically
     revenue_keys = list(income_statement['Revenue'].keys())
     expenses_keys = list(income_statement['Expenses'].keys())

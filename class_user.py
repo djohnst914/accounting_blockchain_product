@@ -1,17 +1,19 @@
+from cryptography.hazmat.primitives.asymmetric.rsa import generate_private_key
 from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives.asymmetric import generate_private_key
-from cryptography.hazmat.primitives import serialization, hashes, padding
+from cryptography.hazmat.primitives import serialization, hashes
+from cryptography.hazmat.primitives.asymmetric import padding
 
 
-    # New class for User with cryptographic capabilities
+
+# New class for User with cryptographic capabilities
 class User:
-    
+
     # This is the constructor method that initializes a new User object. It takes a parameter name to 
-    # assign a name to the user. Inside the constructor, the following three actions are performed:
-    # 1.) A private key is generated using the generate_private_key function from the 
-    #   cryptography.hazmat.primitives.asymmetric module.
-    # 2.) The private key is used to derive a corresponding public key.
-    # 3.) The private_key and public_key attributes are assigned to the user object.
+    # assign a name to the user. Inside the constructor, the following actions are performed:
+    # - A private key is generated using the generate_private_key function from the 
+    # cryptography.hazmat.primitives.asymmetric module.
+    # - The private key is used to derive a corresponding public key.
+    # - The private_key and public_key attributes are assigned to the user object.
     def __init__(self, name):
         self.name = name
         self.private_key = generate_private_key(
@@ -36,3 +38,11 @@ class User:
             hashes.SHA256()
         )
         return signature
+
+    # This method returns the public key associated with the user in PEM (Privacy Enhanced Mail) format. The public key 
+    # is encoded using the serialization.Encoding.PEM format and serialization.PublicFormat.SubjectPublicKeyInfo.
+    def get_public_key(self):
+        return self.public_key.public_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PublicFormat.SubjectPublicKeyInfo
+        )
