@@ -1,3 +1,4 @@
+# Import necessary libraries
 import streamlit as st
 from dataclasses import dataclass
 from typing import List
@@ -5,8 +6,9 @@ import datetime as datetime
 import pandas as pd
 import hashlib
 import io
+from datetime import datetime, timezone
 
-
+# Define a data class for storing transaction records
 @dataclass
 class Record:
     User: str
@@ -16,6 +18,7 @@ class Record:
     Credits: float
     Transaction_Detail: str
 
+# Define a data class for creating blocks in the blockchain
 @dataclass
 class Block:
 
@@ -23,9 +26,10 @@ class Block:
     record: Record
     creator_id: int
     prev_hash: str = "0"
-    timestamp: str = datetime.datetime.utcnow().strftime("%Y-%M-%D %H:%M:%S") 
+    timestamp: str = datetime.now(timezone.utc).strftime("%Y-%M-%D %H:%M:%S") 
     nonce: int = 0
 
+    # Method to hash the block's attributes
     def hash_block(self):
         sha = hashlib.sha256()
 
@@ -46,31 +50,31 @@ class Block:
 
         return sha.hexdigest()
 
-
+# Define a class for the blockchain
 @dataclass
 class PyChain:
-    chain: List[Block]
-    difficulty: int = 3
+    chain: List[Block]  # List to store blocks
+    difficulty: int = 3  # Difficulty level for mining
 
+    # Method for proof of work (mining)
     def proof_of_work(self, block):
-
         calculated_hash = block.hash_block()
 
         num_of_zeros = "0" * self.difficulty
 
         while not calculated_hash.startswith(num_of_zeros):
-
             block.nonce += 1
-
             calculated_hash = block.hash_block()
 
-        print("Wining Hash", calculated_hash)
+        print("Winning Hash:", calculated_hash)
         return block
 
+    # Method to add a block to the blockchain
     def add_block(self, candidate_block):
         block = self.proof_of_work(candidate_block)
         self.chain += [block]
 
+    # Method to check the validity of the blockchain
     def is_valid(self):
         block_hash = self.chain[0].hash_block()
 
@@ -83,7 +87,8 @@ class PyChain:
 
         print("Blockchain is Valid")
         return True
-    
+
+# Cache the setup function to avoid redundant computations
 @st.cache(allow_output_mutation=True)
 def setup():
     print("Initializing Chain")
@@ -91,20 +96,23 @@ def setup():
     genesis_block = Block(record=genesis_record, creator_id=0)
     return PyChain([genesis_block])
 
-
+# Initialize the blockchain using the setup function
 pychain = setup()
 
-st.markdown("<h1 style='text-align: center;'>Ledger Chain</h1>", unsafe_allow_html=True)
-st.markdown("<h2 style='text-align: center;'>Record and Track Your Money with the Blockchain 😎</h2>", unsafe_allow_html=True)
+# Markdown for displaying titles
+st.markdown("<h1 style='text-align: center;'>Ledger Chain 📒⛓️</h1>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align: center;'>Securely Record and Track Your Money with the Blockchain Ledger</h2>", unsafe_allow_html=True)
 
+# Input fields for transaction details
 User = st.text_input("What is your name?")
-Accounting_Class = st.text_input("What kind of transaction is this? (Revenue or Expense)")
+Accounting_Class = st.selectbox("What kind of transaction is this?", ["Asset", "Liability", "Revenue", "Expense", "Equity"])
 Subclass = st.text_input("Is it a paycheck, coffee, gas, etc.?")
 Credits = st.text_input("Money Received:")
 Debits = st.text_input("Money Spent:")
 Transaction_Detail = st.text_input("Make a Note!")
 
-if st.button("Add Block"):
+# Button to add a new block to the blockchain
+if st.button("Add Block 🆕"):
     prev_block = pychain.chain[-1]
     prev_block_hash = prev_block.hash_block()
 
@@ -115,19 +123,18 @@ if st.button("Add Block"):
     )
 
     pychain.add_block(new_block)
-    st.success("Block Added Successfully!")
+    st.success("Block Added Successfully! 👏")
 
-st.markdown("## Blockchain Ledger")
-
+# Create a list of dictionaries for ledger data
 ledger_data = []
 for i, block in enumerate(pychain.chain, start=1):
     ledger_data.append({
         "Block": i,
         "User": block.record.User,
-        "Item Type": block.record.Accounting_Class,
-        "Item Description": block.record.Subclass,
-        "Money Spent": block.record.Debits,
-        "Money Received": block.record.Credits,
+        "Accounting Class": block.record.Accounting_Class,
+        "Subclass": block.record.Subclass,
+        "Debits": block.record.Debits,
+        "Credits": block.record.Credits,
         "Transaction Detail": block.record.Transaction_Detail,
         "Creator Id": block.creator_id,
         "Prev Hash": block.prev_hash,
@@ -135,28 +142,33 @@ for i, block in enumerate(pychain.chain, start=1):
         "Nonce": block.nonce
     })
 
+# Create a Pandas DataFrame from the ledger data and display it
 ledger_df = pd.DataFrame(ledger_data)
 st.dataframe(ledger_df.drop(columns=["Block"]), width=1000)
 
-if st.button("Validate Ledger🕵️‍♀️"):
+# Button to validate the ledger and display the result
+if st.button("Validate Ledger 🕵️‍♀️"):
     is_valid = pychain.is_valid()
     if is_valid:
-        st.write("✅Valid!")
+        st.write("✅ Valid! ✅")
     else:
-        st.write("❌Invalid!")
+        st.write("❌ Invalid! ❌")
 
+# Header for downloading the blockchain ledger
 st.header("Download Blockchain Ledger")
 
-if st.button("Prepare Ledger for Download📲"):
+# Button to prepare and download the ledger as an Excel file
+if st.button("Prepare Ledger for Download 📲"):
     ledger_data = []
 
+    # Extract ledger data from the blockchain and append to the list
     for block in pychain.chain:
         ledger_data.append({
             "User": block.record.User,
-            "Item Type": block.record.Accounting_Class,
-            "Item Description": block.record.Subclass,
-            "Money Spent": block.record.Debits,
-            "Money Received": block.record.Credits,
+            "Accounting Class": block.record.Accounting_Class,
+            "Subclass": block.record.Subclass,
+            "Debits": block.record.Debits,
+            "Credits": block.record.Credits,
             "Transaction Detail": block.record.Transaction_Detail,
             "Creator Id": block.creator_id,
             "Prev Hash": block.prev_hash,
@@ -164,17 +176,98 @@ if st.button("Prepare Ledger for Download📲"):
             "Nonce": block.nonce
         })
 
+    # Create a Pandas DataFrame from the ledger data and prepare an Excel file
     blockchain_excel = pd.DataFrame(ledger_data).astype(str)
     excel_file = io.BytesIO()
     excel_writer = pd.ExcelWriter(excel_file, engine='xlsxwriter')
     blockchain_excel.to_excel(excel_writer, sheet_name='Blockchain Ledger', index=False)
     excel_writer.save()
     excel_file.seek(0)
-    
-    # Download the Excel file directly
+
+    # Add a download button to download the prepared Excel file
     st.download_button(
-        label="Download Ledger as an Excel💽",
+        label="Download Ledger as an Excel 💽",
         data=excel_file,
         file_name="blockchain_ledger.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
+
+# Set the title for the sidebar section
+st.sidebar.title("Financial Tools 🛠️💸")
+
+# Define functions for financial calculations
+def calculate_dti(income, debt):
+    return debt / income
+
+def calculate_emergency_fund_ratio(cash, expenses):
+    return cash / expenses
+
+# Add a header for the net worth calculator
+st.sidebar.header("Net Worth Calculator")
+
+# Dropdown to select a user from the ledger data
+selected_user = st.sidebar.selectbox("Select a User", ledger_df["User"].unique())
+
+# Filter the ledger data for the selected user
+user_data = ledger_df[ledger_df["User"] == selected_user]
+
+# Calculate total assets and total liabilities for the selected user
+total_assets = user_data[user_data["Accounting Class"] == "Asset"]["Credits"].sum()
+total_liabilities = user_data[user_data["Accounting Class"] == "Liability"]["Debits"].sum()
+
+# Calculate net worth
+net_worth = total_assets - total_liabilities
+
+# Display the net worth for the selected user
+st.sidebar.write(f"Net Worth for {selected_user}: ${net_worth:.2f}")
+
+# Add a header for the debt-to-income ratio calculator
+st.sidebar.header("Debt-to-Income Ratio Calculator")
+
+# Input fields for monthly income and debt
+income = st.sidebar.number_input("Monthly Income ($)", value=1000.0, step=100.0)
+debt = st.sidebar.number_input("Monthly Debt ($)", value=500.0, step=100.0)
+
+# Button to calculate the debt-to-income ratio
+if st.sidebar.button("Calculate DTI Ratio"):
+    dti_ratio = calculate_dti(income, debt)
+    st.sidebar.write(f"Your Debt-to-Income Ratio is: {dti_ratio:.2f}")
+
+    if dti_ratio <= 0.4:
+        st.sidebar.write("Congratulations! Your DTI ratio is within a healthy range.")
+    else:
+        st.sidebar.write("Your DTI ratio is higher than recommended. Consider managing your debt.")
+
+# Header for the emergency fund ratio calculator
+st.sidebar.header("Emergency Fund Ratio Calculator")
+
+# Input fields for total cash savings and monthly nondiscretionary expenses
+cash = st.sidebar.number_input("Total Cash Savings ($)", value=5000.0, step=100.0)
+expenses = st.sidebar.number_input("Monthly Nondiscretionary Expenses ($)", value=1000.0, step=100.0)
+
+# Button to calculate the emergency fund ratio
+if st.sidebar.button("Calculate Emergency Fund Ratio"):
+    emergency_fund_ratio = calculate_emergency_fund_ratio(cash, expenses)
+    st.sidebar.write(f"Your Emergency Fund Ratio is: {emergency_fund_ratio:.2f}")
+
+    if 3 <= emergency_fund_ratio <= 6:
+        st.sidebar.write("Congratulations! Your emergency fund is within a recommended range.")
+    else:
+        st.sidebar.write("Consider building a larger emergency fund to cover 3 to 6 months of expenses.")
+
+# Header for the discretionary expense ratio calculator
+st.sidebar.header("Discretionary Expense Ratio Calculator")
+
+# Input fields for monthly income and discretionary expenses
+income = st.sidebar.number_input("Monthly Income ($)", value=2000.0, step=100.0)
+discretionary_expenses = st.sidebar.number_input("Monthly Discretionary Expenses ($)", value=300.0, step=50.0)
+
+# Button to calculate the discretionary expense ratio
+if st.sidebar.button("Calculate Discretionary Expense Ratio"):
+    discretionary_ratio = discretionary_expenses / income
+    st.sidebar.write(f"Your Discretionary Expense Ratio is: {discretionary_ratio:.2f}")
+
+    if discretionary_ratio <= 0.3:
+        st.sidebar.write("Congratulations! Your discretionary expense ratio is within a healthy range.")
+    else:
+        st.sidebar.write("Consider managing your discretionary expenses to improve your financial standing.")
