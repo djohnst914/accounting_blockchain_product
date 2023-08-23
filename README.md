@@ -89,10 +89,6 @@ Blockchain's core feature is its cryptographic security. Each block contains a c
 
 [GitHub](jswhite1992@gmail.com) - jswhite1992@gmail.com
 
-**Michelle Silver**
-
-[GitHub](supersilver1978@gmail.com) - supersilver1978@gmail.com
-
 **Dylan Johnston**
 
 [GitHub](dylanhjjohnston@gmail.com) - dylanhjjohnston@gmail.com
