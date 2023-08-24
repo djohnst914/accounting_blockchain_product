@@ -254,7 +254,7 @@ st.sidebar.write("Chat with your Virtual Finance Assistant 💬")
 # Embed the chatbot iframe with black borders and a title in the sidebar
 chatbot_iframe = """
 <div style="padding: 10px; text-align: center;">
-    <h2>Pro$perPal👑</h2>
+    <h2>Pro$perPal🚀</h2>
     <iframe
         src="https://www.chatbase.co/chatbot-iframe/N6GTBP_f9uvB2GumnXfvU"
         width="100%"
