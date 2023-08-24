@@ -160,7 +160,7 @@ chatbot_iframe = """
     <iframe
         src="https://www.chatbase.co/chatbot-iframe/N6GTBP_f9uvB2GumnXfvU"
         width="100%"
-        style="height: 100%; min-height: 700px; border: none;"
+        style="height: 100%; min-height: 700px; border: none; overflow-wrap: break-word; max-width: 800px;"
     ></iframe>
 </div>
 """
