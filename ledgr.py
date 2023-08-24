@@ -30,19 +30,19 @@ class Block:
     def hash_block(self):
         sha = hashlib.sha256()
 
-        record = str(self.record).encode()
+        record = str(self.Record).encode()
         sha.update(record)
 
-        creator_id = str(self.creator_id).encode()
+        creator_id = str(self.Creator_Id).encode()
         sha.update(creator_id)
 
-        timestamp = str(self.timestamp).encode()
+        timestamp = str(self.Timestamp).encode()
         sha.update(timestamp)
 
-        prev_hash = str(self.prev_hash).encode()
+        prev_hash = str(self.Previous_Hash).encode()
         sha.update(prev_hash)
 
-        nonce = str(self.nonce).encode()
+        nonce = str(self.Nonce).encode()
         sha.update(nonce)
 
         return sha.hexdigest()
@@ -60,7 +60,7 @@ class PyChain:
         num_of_zeros = "0" * self.difficulty
 
         while not calculated_hash.startswith(num_of_zeros):
-            block.nonce += 1
+            block.Nonce += 1
             calculated_hash = block.hash_block()
 
         print("Winning Hash:", calculated_hash)
@@ -76,7 +76,7 @@ class PyChain:
         block_hash = self.chain[0].hash_block()
 
         for block in self.chain[1:]:
-            if block_hash != block.prev_hash:
+            if block_hash != block.Previous_Hash:
                 print("Blockchain is invalid!")
                 return False
 
@@ -114,9 +114,9 @@ if st.button("Add Block 🆕"):
     prev_block_hash = prev_block.hash_block()
 
     new_block = Block(
-        record=Record(User=User, Type=Type, Detail=Detail, Spent=float(Spent), Received=float(Received)),
-        creator_id=7,
-        prev_hash=prev_block_hash
+        Record=Record(User=User, Type=Type, Detail=Detail, Spent=float(Spent), Received=float(Received)),
+        Creator_Id=7,
+        Previous_Hash=prev_block_hash
     )
 
     pychain.add_block(new_block)
