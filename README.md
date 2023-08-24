@@ -81,3 +81,8 @@ A defining feature of blockchain's security is its cryptographic measures. Each 
 
 ---
 
+## *LICENSE*
+djohnst914/accounting_blockchain_product is licensed under the GNU General Public License v3.0. See [LICENSE](https://github.com/djohnst914/accounting_blockchain_product/blob/main/LICENSE) file for details.
+
+---
+
