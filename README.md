@@ -32,34 +32,18 @@ A defining feature of blockchain's security is its cryptographic measures. Each 
 
 ---
 
-## *Installation Guide*
-
-1. **Prerequisites:**
-    - Ensure you have Python installed:
-        - **[Install Python](https://www.python.org/downloads/)**
-    - Install required libraries:
-        - Streamlit: `pip install streamlit`
-        - Pandas: `pip install pandas`
-
-2. **Clone Repo:** 
-   Navigate to your desired directory and:
-   
-    ```bash
-    git clone git@github.com:jswhite1992/accounting_blockchain_product.git
-    cd <repository-folder-name>
-    ```
-
-3. **Running the Application:**
-    ```bash
-    streamlit run ledgr.py
-    ```
-
----
-
 ## *Usage*
+*please read carefully*
+
 
 1. Open the Streamlit application via your web browser.
+        
+- [CLICK HERE TO OPEN WEB APP](https://accountingblockchainappuct-axeunskyxnjjv9p7vst7vh.streamlit.app/#securely-record-and-track-your-money-with-the-blockchain-ledger)
+
 2. Input your name and provide transaction details such as the type (Revenue or Expense), specific details (e.g., paycheck, coffee), amounts received and going out, and any additional notes.
+
+- **⭐️IMPORTANT⭐️:** When inputting numeric values, please provide just the numeric values. Here's an example: Instead of inputting 300,000, input 300000. This is how the system reads the inputs, but in the actual ledger it will be shown as 300,000.
+
 3. Click on the "Add Block" button to add the transaction to the blockchain.
 4. View the ledger to see the list of transactions recorded in the blockchain.
 5. Validate the blockchain's integrity using the "Validate Ledger" button.
@@ -68,6 +52,7 @@ A defining feature of blockchain's security is its cryptographic measures. Each 
 8. Chat with Pro$perPal🚀 for any questions, comments, concerns, relating to your personal finances
 
 ---
+
 ## *Contributors*
 
 **Rosalinda Olvera Fernandez**
@@ -87,7 +72,6 @@ A defining feature of blockchain's security is its cryptographic measures. Each 
 [GitHub](https://github.com/djohnst914) - dylanhjjohnston@gmail.com
 
 ---
-
 
 ## *References*
 
