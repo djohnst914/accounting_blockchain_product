@@ -153,28 +153,6 @@ if st.button("Validate Ledger 🕵️‍♀️"):
     else:
         st.write("❌ Invalid! ❌")
 
-# Header for downloading the blockchain ledger
-st.header("Download Blockchain Ledger")
-
-# Create a Pandas DataFrame from the ledger data and prepare an Excel file
-blockchain_excel = pd.DataFrame(ledger_data).astype(str)
-excel_file = io.BytesIO()
-
-# Use 'xlsxwriter' as the engine
-excel_writer = pd.ExcelWriter(excel_file, engine='xlsxwriter')
-
-blockchain_excel.to_excel(excel_writer, sheet_name='Blockchain Ledger', index=False)
-excel_writer.save()
-excel_file.seek(0)
-
-# Update the MIME type to match the new engine ('xlsxwriter' instead of 'openpyxl')
-st.download_button(
-    label="Download Ledger as an Excel 💽",
-    data=excel_file,
-    file_name="blockchain_ledger.xlsx",
-    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-)
-
 # Set the title for the sidebar section
 st.sidebar.title("Financial Tools 🛠️💸")
 
