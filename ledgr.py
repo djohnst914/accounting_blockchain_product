@@ -252,6 +252,8 @@ if st.button("Calculate Discretionary Expense Ratio 🗂️"):
     else:
         st.write("Consider managing your discretionary expenses to improve your financial standing.")
 
+st.sidebar.write("Chat with your Virtual Finance Assistant 💬")
+
 # Embed the chatbot iframe with black borders and a title in the sidebar
 chatbot_iframe = """
 <div style="border: 2px solid black; padding: 10px; text-align: center;">
