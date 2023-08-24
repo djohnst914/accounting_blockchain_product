@@ -10,22 +10,21 @@ import hashlib
 @dataclass
 class Record:
     User: str
-    Accounting_Class: str
-    Subclass: str
-    Debits: float
-    Credits: float
-    Transaction_Detail: str
+    Type: str
+    Detail: str
+    Received: float
+    Spent: float
 
 # Define a data class for creating blocks in the blockchain
 @dataclass
 class Block:
 
     # Rename the `data` attribute to `record`, and set the data type to `Record`
-    record: Record
-    creator_id: int
-    prev_hash: str = "0"
-    timestamp: str = datetime.now(timezone.utc).strftime("%Y-%M-%D %H:%M:%S") 
-    nonce: int = 0
+    Record: Record
+    Creator_Id: int
+    Previous_Hash: str = "0"
+    Timestamp: str = datetime.now(timezone.utc).strftime("%Y-%M-%D %H:%M:%S") 
+    Nonce: int = 0
 
     # Method to hash the block's attributes
     def hash_block(self):
@@ -90,7 +89,7 @@ class PyChain:
 @st.cache(allow_output_mutation=True)
 def setup():
     print("Initializing Chain")
-    genesis_record = Record(User="System", Accounting_Class="n/a", Subclass="n/a", Debits=0.0, Credits=0.0, Transaction_Detail="n/a")
+    genesis_record = Record(User="System", Type="n/a", Detail="n/a", Received=0.0, Spent=0.0)
     genesis_block = Block(record=genesis_record, creator_id=0)
     return PyChain([genesis_block])
 
@@ -103,11 +102,11 @@ st.markdown("<h2 style='text-align: center;'>Securely Record and Track Your Mone
 
 # Input fields for transaction details
 User = st.text_input("What is your name?")
-Accounting_Class = st.selectbox("What kind of transaction is this?", ["Asset", "Liability", "Revenue", "Expense", "Equity"])
-Subclass = st.text_input("Is it a paycheck, coffee, gas, etc.?")
-Credits = st.text_input("Money Received:", value="0.0")  # Provide a default value
-Debits = st.text_input("Money Spent:", value="0.0")  # Provide a default value
-Transaction_Detail = st.text_input("Make a Note!")
+Type = st.selectbox("What type of transaction is this?", ["Asset", "Liability", "Revenue", "Expense", "Equity"])
+Detail = st.text_input("Detail:")
+Received = st.text_input("($) Received:", value="0.0")  # Provide a default value
+Spent = st.text_input("($) Spent:", value="0.0")  # Provide a default value
+
 
 # Button to add a new block to the blockchain
 if st.button("Add Block 🆕"):
@@ -115,7 +114,7 @@ if st.button("Add Block 🆕"):
     prev_block_hash = prev_block.hash_block()
 
     new_block = Block(
-        record=Record(User=User, Accounting_Class=Accounting_Class, Subclass=Subclass, Debits=float(Debits), Credits=float(Credits), Transaction_Detail=Transaction_Detail),
+        record=Record(User=User, Type=Type, Detail=Detail, Spent=float(Spent), Received=float(Received)),
         creator_id=7,
         prev_hash=prev_block_hash
     )
@@ -129,15 +128,14 @@ for i, block in enumerate(pychain.chain, start=1):
     ledger_data.append({
         "Block": i,
         "User": block.record.User,
-        "Accounting Class": block.record.Accounting_Class,
-        "Subclass": block.record.Subclass,
-        "Debits": block.record.Debits,
-        "Credits": block.record.Credits,
-        "Transaction Detail": block.record.Transaction_Detail,
-        "Creator Id": block.creator_id,
-        "Prev Hash": block.prev_hash,
-        "Timestamp": block.timestamp,
-        "Nonce": block.nonce
+        "Type": block.record.Type,
+        "Detail": block.record.Detail,
+        "Received": block.record.Received,
+        "Spent": block.record.Spent,
+        "Creator Id": block.Creator_Id,
+        "Previous Hash": block.Previous_Hash,
+        "Timestamp": block.Timestamp,
+        "Nonce": block.Nonce
     })
 
 # title for ledger
@@ -191,8 +189,8 @@ selected_user = st.selectbox("Select a User 🧍", ledger_df["User"].unique())
 user_data = ledger_df[ledger_df["User"] == selected_user]
 
 # Calculate total assets and total liabilities for the selected user
-total_assets = user_data[user_data["Accounting Class"] == "Asset"]["Credits"].sum()
-total_liabilities = user_data[user_data["Accounting Class"] == "Liability"]["Debits"].sum()
+total_assets = user_data[user_data["Type"] == "Asset"]["Received"].sum()
+total_liabilities = user_data[user_data["Type"] == "Liability"]["Spent"].sum()
 
 # Calculate net worth
 net_worth = total_assets - total_liabilities
