@@ -90,7 +90,7 @@ class PyChain:
 def setup():
     print("Initializing Chain")
     genesis_record = Record(User="System", Type="n/a", Detail="n/a", Received=0.0, Spent=0.0)
-    genesis_block = Block(record=genesis_record, Creator_Id=0)
+    genesis_block = Block(Record=genesis_record, Creator_Id=0)
     return PyChain([genesis_block])
 
 # Initialize the blockchain using the setup function
