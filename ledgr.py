@@ -153,15 +153,31 @@ if st.button("Validate Ledger 🕵️‍♀️"):
     else:
         st.write("❌ Invalid! ❌")
 
-# Define a function to open the chatbot in a new window
-def open_chatbot():
-    chatbot_url = "https://www.chatbase.co/chatbot-iframe/N6GTBP_f9uvB2GumnXfvU"
-    js_code = f"window.open('{chatbot_url}', '_blank', 'width=800, height=600');"
-    st.write('<script>{}</script>'.format(js_code), unsafe_allow_html=True)
+# Embed the chatbot iframe
+chatbot_iframe = """
+<iframe
+src="https://www.chatbase.co/chatbot-iframe/N6GTBP_f9uvB2GumnXfvU"
+width="100%"
+style="height: 100%; min-height: 700px"
+frameborder="0"
+></iframe>
+"""
+st.markdown(chatbot_iframe, unsafe_allow_html=True)
 
-# Create a button to open the chatbot in a new window
-if st.button("Open Chatbot"):
-    open_chatbot()
+# Add the chat bubble script tags
+chat_bubble_script = """
+<script>
+  window.chatbaseConfig = {
+    chatbotId: "N6GTBP_f9uvB2GumnXfvU",
+  };
+</script>
+<script
+  src="https://www.chatbase.co/embed.min.js"
+  id="N6GTBP_f9uvB2GumnXfvU"
+  defer>
+</script>
+"""
+st.markdown(chat_bubble_script, unsafe_allow_html=True)
 
 # Set the title for the sidebar section
 st.sidebar.title("Financial Tools 🛠️💸")
