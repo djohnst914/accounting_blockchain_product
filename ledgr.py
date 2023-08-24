@@ -173,7 +173,7 @@ if st.button("Prepare Ledger for CSV Download 📲"):
     )
 
 # Set the title for the sidebar section
-st.title("Financial Tools 🛠️💸")
+st.header("Financial Tools 🛠️💸")
 
 # Define functions for financial calculations
 def calculate_dti(income, debt):
@@ -183,7 +183,7 @@ def calculate_emergency_fund_ratio(cash, expenses):
     return cash / expenses
 
 # Add a header for the net worth calculator
-st.header("Net Worth Calculator")
+st.markdown("### Net Worth Calculator")
 
 # Dropdown to select a user from the ledger data
 selected_user = st.selectbox("Select a User 🧍", ledger_df["User"].unique())
@@ -202,7 +202,7 @@ net_worth = total_assets - total_liabilities
 st.write(f"Net Worth for {selected_user}: ${net_worth:.2f}")
 
 # Add a header for the debt-to-income ratio calculator
-st.header("Debt-to-Income Ratio Calculator")
+st.markdown("### Debt-to-Income Ratio Calculator")
 
 # Input fields for monthly income and debt
 income = st.number_input("Monthly Income ($)", value=1000.0, step=100.0)
@@ -219,7 +219,7 @@ if st.button("Calculate DTI Ratio 🧮"):
         st.write("Your DTI ratio is higher than recommended. Consider managing your debt.")
 
 # Header for the emergency fund ratio calculator
-st.header("Emergency Fund Ratio Calculator")
+st.markdown("### Emergency Fund Ratio Calculator")
 
 # Input fields for total cash savings and monthly nondiscretionary expenses
 cash = st.number_input("Total Cash Savings ($)", value=5000.0, step=100.0)
@@ -236,7 +236,7 @@ if st.button("Calculate Emergency Fund Ratio 🚨"):
         st.write("Consider building a larger emergency fund to cover 3 to 6 months of expenses.")
 
 # Header for the discretionary expense ratio calculator
-st.header("Discretionary Expense Ratio Calculator")
+st.markdown("### Discretionary Expense Ratio Calculator")
 
 # Input fields for monthly income and discretionary expenses
 income = st.number_input("Monthly Income ($)", value=2000.0, step=100.0)
