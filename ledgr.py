@@ -172,36 +172,8 @@ if st.button("Prepare Ledger for CSV Download 📲"):
         mime="text/csv",
     )
 
-# Embed the chatbot iframe with black borders and a title
-chatbot_iframe = """
-<div style="border: 2px solid black; padding: 10px; display: inline-block; margin: 0 auto; text-align: center;">
-    <h2>Pro$perPal👑</h2>
-    <iframe
-        src="https://www.chatbase.co/chatbot-iframe/N6GTBP_f9uvB2GumnXfvU"
-        width="100%"
-        style="height: 100%; min-height: 550px; border: none; overflow-wrap: break-word; max-width: 1200px;"
-    ></iframe>
-</div>
-"""
-st.markdown(chatbot_iframe, unsafe_allow_html=True)
-
-# Add the chat bubble script tags
-chat_bubble_script = """
-<script>
-  window.chatbaseConfig = {
-    chatbotId: "N6GTBP_f9uvB2GumnXfvU",
-  };
-</script>
-<script
-  src="https://www.chatbase.co/embed.min.js"
-  id="N6GTBP_f9uvB2GumnXfvU"
-  defer>
-</script>
-"""
-st.markdown(chat_bubble_script, unsafe_allow_html=True)
-
 # Set the title for the sidebar section
-st.sidebar.title("Financial Tools 🛠️💸")
+st.title("Financial Tools 🛠️💸")
 
 # Define functions for financial calculations
 def calculate_dti(income, debt):
@@ -211,10 +183,10 @@ def calculate_emergency_fund_ratio(cash, expenses):
     return cash / expenses
 
 # Add a header for the net worth calculator
-st.sidebar.header("Net Worth Calculator")
+st.header("Net Worth Calculator")
 
 # Dropdown to select a user from the ledger data
-selected_user = st.sidebar.selectbox("Select a User", ledger_df["User"].unique())
+selected_user = st.selectbox("Select a User 🧍", ledger_df["User"].unique())
 
 # Filter the ledger data for the selected user
 user_data = ledger_df[ledger_df["User"] == selected_user]
@@ -227,55 +199,84 @@ total_liabilities = user_data[user_data["Accounting Class"] == "Liability"]["Deb
 net_worth = total_assets - total_liabilities
 
 # Display the net worth for the selected user
-st.sidebar.write(f"Net Worth for {selected_user}: ${net_worth:.2f}")
+st.write(f"Net Worth for {selected_user}: ${net_worth:.2f}")
 
 # Add a header for the debt-to-income ratio calculator
-st.sidebar.header("Debt-to-Income Ratio Calculator")
+st.header("Debt-to-Income Ratio Calculator")
 
 # Input fields for monthly income and debt
-income = st.sidebar.number_input("Monthly Income ($)", value=1000.0, step=100.0)
-debt = st.sidebar.number_input("Monthly Debt ($)", value=500.0, step=100.0)
+income = st.number_input("Monthly Income ($)", value=1000.0, step=100.0)
+debt = st.number_input("Monthly Debt ($)", value=500.0, step=100.0)
 
 # Button to calculate the debt-to-income ratio
-if st.sidebar.button("Calculate DTI Ratio"):
+if st.button("Calculate DTI Ratio 🧮"):
     dti_ratio = calculate_dti(income, debt)
-    st.sidebar.write(f"Your Debt-to-Income Ratio is: {dti_ratio:.2f}")
+    st.write(f"Your Debt-to-Income Ratio is: {dti_ratio:.2f}")
 
     if dti_ratio <= 0.4:
-        st.sidebar.write("Congratulations! Your DTI ratio is within a healthy range.")
+        st.write("Congratulations! Your DTI ratio is within a healthy range.")
     else:
-        st.sidebar.write("Your DTI ratio is higher than recommended. Consider managing your debt.")
+        st.write("Your DTI ratio is higher than recommended. Consider managing your debt.")
 
 # Header for the emergency fund ratio calculator
-st.sidebar.header("Emergency Fund Ratio Calculator")
+st.header("Emergency Fund Ratio Calculator")
 
 # Input fields for total cash savings and monthly nondiscretionary expenses
-cash = st.sidebar.number_input("Total Cash Savings ($)", value=5000.0, step=100.0)
-expenses = st.sidebar.number_input("Monthly Nondiscretionary Expenses ($)", value=1000.0, step=100.0)
+cash = st.number_input("Total Cash Savings ($)", value=5000.0, step=100.0)
+expenses = st.number_input("Monthly Nondiscretionary Expenses ($)", value=1000.0, step=100.0)
 
 # Button to calculate the emergency fund ratio
-if st.sidebar.button("Calculate Emergency Fund Ratio"):
+if st.button("Calculate Emergency Fund Ratio 🚨"):
     emergency_fund_ratio = calculate_emergency_fund_ratio(cash, expenses)
-    st.sidebar.write(f"Your Emergency Fund Ratio is: {emergency_fund_ratio:.2f}")
+    st.write(f"Your Emergency Fund Ratio is: {emergency_fund_ratio:.2f}")
 
     if 3 <= emergency_fund_ratio <= 6:
-        st.sidebar.write("Congratulations! Your emergency fund is within a recommended range.")
+        st.write("Congratulations! Your emergency fund is within a recommended range.")
     else:
-        st.sidebar.write("Consider building a larger emergency fund to cover 3 to 6 months of expenses.")
+        st.write("Consider building a larger emergency fund to cover 3 to 6 months of expenses.")
 
 # Header for the discretionary expense ratio calculator
-st.sidebar.header("Discretionary Expense Ratio Calculator")
+st.header("Discretionary Expense Ratio Calculator")
 
 # Input fields for monthly income and discretionary expenses
-income = st.sidebar.number_input("Monthly Income ($)", value=2000.0, step=100.0)
-discretionary_expenses = st.sidebar.number_input("Monthly Discretionary Expenses ($)", value=300.0, step=50.0)
+income = st.number_input("Monthly Income ($)", value=2000.0, step=100.0)
+discretionary_expenses = st.number_input("Monthly Discretionary Expenses ($)", value=300.0, step=50.0)
 
 # Button to calculate the discretionary expense ratio
-if st.sidebar.button("Calculate Discretionary Expense Ratio"):
+if st.button("Calculate Discretionary Expense Ratio 🗂️"):
     discretionary_ratio = discretionary_expenses / income
-    st.sidebar.write(f"Your Discretionary Expense Ratio is: {discretionary_ratio:.2f}")
+    st.write(f"Your Discretionary Expense Ratio is: {discretionary_ratio:.2f}")
 
     if discretionary_ratio <= 0.3:
-        st.sidebar.write("Congratulations! Your discretionary expense ratio is within a healthy range.")
+        st.write("Congratulations! Your discretionary expense ratio is within a healthy range.")
     else:
-        st.sidebar.write("Consider managing your discretionary expenses to improve your financial standing.")
+        st.write("Consider managing your discretionary expenses to improve your financial standing.")
+
+# Embed the chatbot iframe with black borders and a title in the sidebar
+chatbot_iframe = """
+<div style="border: 2px solid black; padding: 10px; text-align: center;">
+    <h2>Pro$perPal👑</h2>
+    <iframe
+        src="https://www.chatbase.co/chatbot-iframe/N6GTBP_f9uvB2GumnXfvU"
+        width="100%"
+        style="height: 100%; min-height: 550px; border: none; overflow-wrap: break-word; max-width: 300px;"
+    ></iframe>
+</div>
+"""
+st.sidebar.markdown(chatbot_iframe, unsafe_allow_html=True)
+
+# Add the chat bubble script tags to the sidebar
+chat_bubble_script = """
+<script>
+  window.chatbaseConfig = {
+    chatbotId: "N6GTBP_f9uvB2GumnXfvU",
+  };
+</script>
+<script
+  src="https://www.chatbase.co/embed.min.js"
+  id="N6GTBP_f9uvB2GumnXfvU"
+  defer>
+</script>
+"""
+st.sidebar.markdown(chat_bubble_script, unsafe_allow_html=True)
+
