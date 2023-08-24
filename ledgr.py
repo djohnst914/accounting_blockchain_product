@@ -153,6 +153,26 @@ if st.button("Validate Ledger 🕵️‍♀️"):
     else:
         st.write("❌ Invalid! ❌")
 
+# Button to download the ledger as an Excel spreadsheet
+if st.button("Download Ledger as Excel"):
+    # Create a Pandas DataFrame from the ledger data
+    ledger_df = pd.DataFrame(ledger_data)
+
+    # Create an Excel writer and save the DataFrame to an Excel file
+    excel_file = io.BytesIO()
+    excel_writer = pd.ExcelWriter(excel_file, engine="xlsxwriter")
+    ledger_df.to_excel(excel_writer, sheet_name="Ledger", index=False)
+    excel_writer.save()
+    excel_file.seek(0)
+
+    # Provide the Excel file for download
+    st.download_button(
+        label="Download Ledger Excel",
+        data=excel_file,
+        file_name="ledger.xlsx",
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    )
+
 # Embed the chatbot iframe with black borders and a title
 chatbot_iframe = """
 <div style="border: 2px solid black; padding: 10px; display: inline-block; margin: 0 auto; text-align: center;">
