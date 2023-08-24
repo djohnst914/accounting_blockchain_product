@@ -153,8 +153,6 @@ if st.button("Validate Ledger 🕵️‍♀️"):
     else:
         st.write("❌ Invalid! ❌")
 
-st.header("⬇️ Talk with Your Virtual Finance Assistant ⬇️")
-
 # Embed the chatbot iframe with black borders and a title
 chatbot_iframe = """
 <div style="border: 2px solid black; padding: 10px; display: inline-block; margin: 0 auto; text-align: center;">
