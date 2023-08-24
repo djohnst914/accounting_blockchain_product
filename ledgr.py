@@ -127,11 +127,11 @@ ledger_data = []
 for i, block in enumerate(pychain.chain, start=1):
     ledger_data.append({
         "Block": i,
-        "User": block.record.User,
-        "Type": block.record.Type,
-        "Detail": block.record.Detail,
-        "Received": block.record.Received,
-        "Spent": block.record.Spent,
+        "User": block.Record.User,
+        "Type": block.Record.Type,
+        "Detail": block.Record.Detail,
+        "Received": block.Record.Received,
+        "Spent": block.Record.Spent,
         "Creator Id": block.Creator_Id,
         "Previous Hash": block.Previous_Hash,
         "Timestamp": block.Timestamp,
