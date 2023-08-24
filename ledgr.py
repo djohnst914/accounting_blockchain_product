@@ -153,14 +153,16 @@ if st.button("Validate Ledger 🕵️‍♀️"):
     else:
         st.write("❌ Invalid! ❌")
 
-# Embed the chatbot iframe
+# Embed the chatbot iframe with black borders and a title
 chatbot_iframe = """
-<iframe
-src="https://www.chatbase.co/chatbot-iframe/N6GTBP_f9uvB2GumnXfvU"
-width="100%"
-style="height: 100%; min-height: 700px"
-frameborder="0"
-></iframe>
+<div style="border: 2px solid black; padding: 10px; display: inline-block;">
+    <h2 style="text-align: center;">Pro$perPal Chatbot</h2>
+    <iframe
+        src="https://www.chatbase.co/chatbot-iframe/N6GTBP_f9uvB2GumnXfvU"
+        width="100%"
+        style="height: 100%; min-height: 700px; border: none;"
+    ></iframe>
+</div>
 """
 st.markdown(chatbot_iframe, unsafe_allow_html=True)
 
