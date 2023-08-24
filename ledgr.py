@@ -141,6 +141,9 @@ for i, block in enumerate(pychain.chain, start=1):
         "Nonce": block.nonce
     })
 
+# title for ledger
+st.header("Blockchain Ledger")
+
 # Create a Pandas DataFrame from the ledger data and display it
 ledger_df = pd.DataFrame(ledger_data)
 st.dataframe(ledger_df.drop(columns=["Block"]), width=1000)
@@ -154,7 +157,7 @@ if st.button("Validate Ledger 🕵️‍♀️"):
         st.write("❌ Invalid! ❌")
 
 # Button to download the ledger as a CSV file
-if st.button("Download Ledger as CSV"):
+if st.button("Prepare Ledger for CSV Download 📲"):
     # Create a Pandas DataFrame from the ledger data
     ledger_df = pd.DataFrame(ledger_data)
 
@@ -163,7 +166,7 @@ if st.button("Download Ledger as CSV"):
 
     # Provide the CSV file for download
     st.download_button(
-        label="Download Ledger CSV",
+        label="Download Ledger CSV 💽",
         data=csv_file.encode('utf-8'),
         file_name="ledger.csv",
         mime="text/csv",
