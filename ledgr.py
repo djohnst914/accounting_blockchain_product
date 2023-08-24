@@ -156,7 +156,7 @@ if st.button("Validate Ledger 🕵️‍♀️"):
 # Embed the chatbot iframe with black borders and a title
 chatbot_iframe = """
 <div style="border: 2px solid black; padding: 10px; display: inline-block;">
-    <h2 style="text-align: center;">Pro$perPal Chatbot</h2>
+    <h2 style="text-align: center;">Pro$perPal👑</h2>
     <iframe
         src="https://www.chatbase.co/chatbot-iframe/N6GTBP_f9uvB2GumnXfvU"
         width="100%"
