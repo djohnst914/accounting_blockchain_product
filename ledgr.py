@@ -159,14 +159,12 @@ if st.button("Download Ledger as CSV"):
     ledger_df = pd.DataFrame(ledger_data)
 
     # Save the DataFrame to a CSV file
-    csv_file = io.StringIO()
-    ledger_df.to_csv(csv_file, index=False)
-    csv_file.seek(0)
+    csv_file = ledger_df.to_csv(index=False)
 
     # Provide the CSV file for download
     st.download_button(
         label="Download Ledger CSV",
-        data=csv_file,
+        data=csv_file.encode('utf-8'),
         file_name="ledger.csv",
         mime="text/csv",
     )
