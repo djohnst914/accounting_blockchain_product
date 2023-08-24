@@ -2,11 +2,10 @@
 import streamlit as st
 from dataclasses import dataclass
 from typing import List
-import datetime as datetime
+from datetime import datetime, timezone
 import pandas as pd
 import hashlib
 import io
-from datetime import datetime, timezone
 
 # Define a data class for storing transaction records
 @dataclass
@@ -107,8 +106,8 @@ st.markdown("<h2 style='text-align: center;'>Securely Record and Track Your Mone
 User = st.text_input("What is your name?")
 Accounting_Class = st.selectbox("What kind of transaction is this?", ["Asset", "Liability", "Revenue", "Expense", "Equity"])
 Subclass = st.text_input("Is it a paycheck, coffee, gas, etc.?")
-Credits = st.text_input("Money Received:")
-Debits = st.text_input("Money Spent:")
+Credits = st.text_input("Money Received:", value="0.0")  # Provide a default value
+Debits = st.text_input("Money Spent:", value="0.0")  # Provide a default value
 Transaction_Detail = st.text_input("Make a Note!")
 
 # Button to add a new block to the blockchain
@@ -157,40 +156,24 @@ if st.button("Validate Ledger 🕵️‍♀️"):
 # Header for downloading the blockchain ledger
 st.header("Download Blockchain Ledger")
 
-# Button to prepare and download the ledger as an Excel file
-if st.button("Prepare Ledger for Download 📲"):
-    ledger_data = []
+# Create a Pandas DataFrame from the ledger data and prepare an Excel file
+blockchain_excel = pd.DataFrame(ledger_data).astype(str)
+excel_file = io.BytesIO()
 
-    # Extract ledger data from the blockchain and append to the list
-    for block in pychain.chain:
-        ledger_data.append({
-            "User": block.record.User,
-            "Accounting Class": block.record.Accounting_Class,
-            "Subclass": block.record.Subclass,
-            "Debits": block.record.Debits,
-            "Credits": block.record.Credits,
-            "Transaction Detail": block.record.Transaction_Detail,
-            "Creator Id": block.creator_id,
-            "Prev Hash": block.prev_hash,
-            "Timestamp": block.timestamp,
-            "Nonce": block.nonce
-        })
+# Use 'xlsxwriter' as the engine
+excel_writer = pd.ExcelWriter(excel_file, engine='xlsxwriter')
 
-    # Create a Pandas DataFrame from the ledger data and prepare an Excel file
-    blockchain_excel = pd.DataFrame(ledger_data).astype(str)
-    excel_file = io.BytesIO()
-    excel_writer = pd.ExcelWriter(excel_file, engine='xlsxwriter')
-    blockchain_excel.to_excel(excel_writer, sheet_name='Blockchain Ledger', index=False)
-    excel_writer.save()
-    excel_file.seek(0)
+blockchain_excel.to_excel(excel_writer, sheet_name='Blockchain Ledger', index=False)
+excel_writer.save()
+excel_file.seek(0)
 
-    # Add a download button to download the prepared Excel file
-    st.download_button(
-        label="Download Ledger as an Excel 💽",
-        data=excel_file,
-        file_name="blockchain_ledger.xlsx",
-        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
+# Update the MIME type to match the new engine ('xlsxwriter' instead of 'openpyxl')
+st.download_button(
+    label="Download Ledger as an Excel 💽",
+    data=excel_file,
+    file_name="blockchain_ledger.xlsx",
+    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+)
 
 # Set the title for the sidebar section
 st.sidebar.title("Financial Tools 🛠️💸")
