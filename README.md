@@ -10,11 +10,24 @@ A defining feature of blockchain's security is its cryptographic measures. Each 
 
 ---
 
+## **Key Features**
+
+**1. Blockchain Security:** Ledger Chain employs a blockchain framework to safeguard your financial transactions. Each entry is encrypted, time-stamped, and interlinked using cryptographic hashes. This guarantees the immutability of every transaction, preventing unauthorized alterations.
+
+**2. Versatile Transaction Types:** Whether it's income, expenses, investments, or other financial activities, Ledger Chain accommodates a wide array of transaction types. Each entry undergoes a rigorous verification process, ensuring data accuracy and authenticity.
+
+**3. Real-time Tracking:** Ledger Chain provides real-time tracking of your financial records. As you add new transactions, the blockchain ledger dynamically updates, offering you an up-to-date overview of your financial history.
+
+**4. Personalized Chatbot:** Interact with Pro$perPal🚀, your virtual finance assistant. Get real-time financial insights, tips, and recommendations as you navigate your financial journey.
+
+**5. Streamlit Web App:** An intuitive web application interface that allows users to interact with the blockchain, record transactions, view the ledger, and validate the blockchain.
+
 ## *Technologies*
 
 - **Programming Language:** Python
-- **Libraries:** pandas, hashlib, io, datetime
-- **Web Framework:** Streamlit (`st`)
+- **Libraries:** streamlit, dataclasses, pandas, hashlib, datetime, typing
+- **FrontEnd Framework:** Streamlit (`st`)
+- **BackEnd Frameowork:** VS Code 
 - **Operating Systems:** Mac OS, Microsoft Windows
 
 ---
@@ -46,23 +59,13 @@ A defining feature of blockchain's security is its cryptographic measures. Each 
 ## *Usage*
 
 1. Open the Streamlit application via your web browser.
-2. Input your name and provide transaction details such as the type (Revenue or Expense), specific details (e.g., paycheck, coffee), amounts credited and debited, and any additional notes.
+2. Input your name and provide transaction details such as the type (Revenue or Expense), specific details (e.g., paycheck, coffee), amounts received and going out, and any additional notes.
 3. Click on the "Add Block" button to add the transaction to the blockchain.
 4. View the ledger to see the list of transactions recorded in the blockchain.
 5. Validate the blockchain's integrity using the "Validate Ledger" button.
 6. Download the blockchain ledger as an Excel file for offline viewing and storage.
-
----
-
-## *Summary*
-
-**Key Features:**
-
-1. **Record Class:** A dataclass that captures individual transaction records.
-2. **Block Class:** Represents individual blocks in the blockchain, holding the record, previous block's hash, a nonce, and other metadata.
-3. **PyChain Class:** A blockchain implementation that includes methods for proof-of-work, adding blocks, and validating the chain.
-4. **Streamlit Web App:** An intuitive web application that allows users to interact with the blockchain, record transactions, view the ledger, and validate the blockchain.
-
+7. Use the financial tools calculators to better understand your financial standing and what next steps you can take to reach your goals.
+8. Chat with Pro$perPal🚀 for any questions, comments, concerns, relating to your personal finances
 
 ---
 ## *Contributors*
@@ -73,15 +76,15 @@ A defining feature of blockchain's security is its cryptographic measures. Each 
 
 **Alex Valenzuela**
 
-[GitHub](axvalenzuela@gmail.com) - axvalenzuela@gmail.com
+[GitHub](https://github.com/AlexanderValenzuela) - axvalenzuela@gmail.com
 
 **James White**
 
-[GitHub](jswhite1992@gmail.com) - jswhite1992@gmail.com
+[GitHub](https://github.com/jswhite1992) - jswhite1992@gmail.com
 
 **Dylan Johnston**
 
-[GitHub](dylanhjjohnston@gmail.com) - dylanhjjohnston@gmail.com
+[GitHub](https://github.com/djohnst914) - dylanhjjohnston@gmail.com
 
 ---
 
