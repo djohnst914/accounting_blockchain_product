@@ -5,7 +5,6 @@ from typing import List
 from datetime import datetime, timezone
 import pandas as pd
 import hashlib
-import io
 
 # Define a data class for storing transaction records
 @dataclass
