@@ -153,30 +153,33 @@ if st.button("Validate Ledger 🕵️‍♀️"):
     else:
         st.write("❌ Invalid! ❌")
 
-# Define the JavaScript function to open the chatbot pop-up
-js_code = """
-function openChatbotPopup() {
-    var chatbotWindow = window.open('', 'Chatbot Popup', 'width=800, height=700, resizable=yes, scrollbars=yes');
-    chatbotWindow.document.write(`
-        <html>
-        <head>
-            <title>Pro$perPal Chatbot</title>
-        </head>
-        <body>
-            <iframe
-                src="https://www.chatbase.co/chatbot-iframe/N6GTBP_f9uvB2GumnXfvU"
-                width="100%"
-                height="100%"
-                frameborder="0"
-                style="border: none;"
-            ></iframe>
-        </body>
-        </html>
-    `);
-}
+# Embed the chatbot iframe with black borders and a title
+chatbot_iframe = """
+<div style="border: 2px solid black; padding: 10px; display: inline-block;">
+    <h2 style="text-align: center;">Pro$perPal👑</h2>
+    <iframe
+        src="https://www.chatbase.co/chatbot-iframe/N6GTBP_f9uvB2GumnXfvU"
+        width="100%"
+        style="height: 100%; min-height: 550px; border: none; overflow-wrap: break-word; max-width: 1200px;"
+    ></iframe>
+</div>
 """
-# Embed the chatbot button
-st.button("Open Chatbot", on_click=js_code)
+st.markdown(chatbot_iframe, unsafe_allow_html=True)
+
+# Add the chat bubble script tags
+chat_bubble_script = """
+<script>
+  window.chatbaseConfig = {
+    chatbotId: "N6GTBP_f9uvB2GumnXfvU",
+  };
+</script>
+<script
+  src="https://www.chatbase.co/embed.min.js"
+  id="N6GTBP_f9uvB2GumnXfvU"
+  defer>
+</script>
+"""
+st.markdown(chat_bubble_script, unsafe_allow_html=True)
 
 # Set the title for the sidebar section
 st.sidebar.title("Financial Tools 🛠️💸")
